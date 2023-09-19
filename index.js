@@ -1,11 +1,11 @@
 const express = require("express");
 const app = express();
-const connection = require("./database/connection")
+const connection = require("./database/connection");
 
+const categoriesController = require("./categories/CategoriesController");
 
 // View Engine
 app.set('view engine', 'ejs');
-
 
 
 // Static
@@ -21,10 +21,14 @@ app.use(express.json());
 connection
     .authenticate()
     .then(() => {
-        console.log("Conexão feita com sucesso!")
+        console.log("Connection made successfully!")
     }).catch((error) => {
         console.log(error);
     });
+
+
+
+app.use("/", categoriesController);
 
 app.get("/", (req, res) => {
     res.render("index");
