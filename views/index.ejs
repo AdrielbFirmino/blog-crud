@@ -1,5 +1,26 @@
 <%- include ('./partials/header') %>
+<%- include ('./partials/homenavbar') %>
 <body>
-	<h1>Olá mundo!</h1>	
+	<div class="container">
+		<hr>
+		<div class="jumbotron">
+			<h1 class="display-4">Bem vindo!</h1>
+			<br>
+			<p class="lead">Esse é um blog simples feito no curso de Formação node.</p>
+			<hr class="my-4">
+			<p>Está sendo feito inteiramente como objeto de estudo.</p>
+		</div>
+		<% articles.forEach(article => { %>
+			<br>
+			<div class="card">
+				<div class="card-header">
+					<h2><%= article.title %></h2>
+				</div>
+				<div class="card-body">
+					<a href="" class="btn btn-success">Ler Artigo</a>
+				</div>
+			</div>
+		<% }) %>
+	</div>	
 </body>
 <%- include ('./partials/footer') %>
