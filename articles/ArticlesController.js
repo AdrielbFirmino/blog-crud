@@ -35,6 +35,7 @@ router.post("/articles/save", (req, res) => {
 
 router.post("/articles/delete", (req, res) =>{
     var id = req.body.id;
+
     if(id != undefined){
         if(!isNaN(id)){
             Article.destroy({
@@ -54,6 +55,7 @@ router.post("/articles/delete", (req, res) =>{
 
 router.get("/admin/articles/edit/:id", (req, res) => {
     var id = req.params.id;
+
     if(isNaN(id)){
         res.redirect("/admin/articles");
     }
@@ -84,6 +86,40 @@ router.post("/articles/update", (req, res) => {
         res.redirect("/admin/articles");
     }).catch(err => {
         res.redirect("/");
+    });
+});
+
+router.get("/articles/page/:num", (req,res) => {
+    var page = req.params.num;
+    var offset = 0;
+
+    if(isNaN(offset || page == 1)){
+        offset = 0;
+    }
+    else{
+        offset = parseInt(page)
+    }
+
+    Article.findAndCountAll({
+        limit: 4,
+        offset: offset
+    }).then(articles => {
+        var next;
+        
+        if(offset + 4 >= articles.count){
+            next = false;
+        }else{
+            next = true;
+        }
+
+        var result = {
+            next: next,
+            articles: articles
+        }
+
+        Category.findAll().then(categories => {
+            res.render("admin/articles/page", {result: result, categories: categories})
+        });
     });
 });
 
