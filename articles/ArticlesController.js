@@ -76,7 +76,7 @@ router.post("/articles/update", (req, res) => {
     var id = req.body.id;
     var title = req.body.title;
     var body = req.body.body;
-    var category = req.body.category; // O erro se concentra na atualização da categoria
+    var category = req.body.category;
 
     Article.update({title: title, body: body, categoryId: category, slug: slugify(title)}, {
         where: {
@@ -97,12 +97,15 @@ router.get("/articles/page/:num", (req,res) => {
         offset = 0;
     }
     else{
-        offset = parseInt(page)
+        offset = (parseInt(page) - 1) * 4;
     }
 
     Article.findAndCountAll({
         limit: 4,
-        offset: offset
+        offset: offset,
+        order:[
+            ['id','DESC']
+        ]
     }).then(articles => {
         var next;
         
@@ -113,6 +116,7 @@ router.get("/articles/page/:num", (req,res) => {
         }
 
         var result = {
+            page: parseInt(page),
             next: next,
             articles: articles
         }
