@@ -1,0 +1,26 @@
+<%- include('../../partials/header.ejs') %>
+<%- include('../../partials/navbar.ejs') %>
+
+<div class="container">
+    <hr>
+    <img src="/img/profile.png" 
+    style="display: block; margin-left: auto; margin-right: auto; width: 50%;width: 128px;height: 128px;">
+    <br>
+    <div class="card">
+        <div class="card-header" style="text-align: center;">
+            <h2>Login de admin</h2>
+        </div>
+        <div class="card-body">
+            <form action="/authenticate" method="POST">
+                <h4>Email</h4>
+                <input class="form-control" name="email" type="email" placeholder="exemplo@gmail.com"><br>
+                <h4>Senha</h4>
+                <input class="form-control" name="password" type="password" placeholder="********"><hr>
+                <button type="submit" class="btn btn-info btn-block">Login</button>
+            </form>
+        </div>
+    </div>
+    <hr>
+</div>
+
+<%- include('../../partials/footer.ejs') %>
